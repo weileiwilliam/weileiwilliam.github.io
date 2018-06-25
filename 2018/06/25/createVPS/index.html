@@ -119,7 +119,7 @@
 <meta property="og:image" content="https://github.com/weileiwilliam/imgaesbb/raw/master/vps/vps1.png">
 <meta property="og:image" content="https://github.com/weileiwilliam/imgaesbb/raw/master/vps/vps2.png">
 <meta property="og:image" content="https://github.com/weileiwilliam/imgaesbb/raw/master/vps/vps3.png">
-<meta property="og:updated_time" content="2018-06-25T08:41:45.334Z">
+<meta property="og:updated_time" content="2018-06-25T08:48:50.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简易搭建VPS">
 <meta name="twitter:description" content="这篇笔记是以前就写好的，现在拿出来分享一下怎么搭建VPS。 准备工作首先需要购买服务器，听朋友推荐vultr不错，我也就在vultr购买了。">
@@ -343,7 +343,7 @@
                 
               
 
-              <time title="创建时间：2018-06-25 16:02:40 / 修改时间：16:41:45" itemprop="dateCreated datePublished" datetime="2018-06-25T16:02:40+08:00">2018-06-25</time>
+              <time title="创建时间：2018-06-25 16:02:40 / 修改时间：16:48:50" itemprop="dateCreated datePublished" datetime="2018-06-25T16:02:40+08:00">2018-06-25</time>
             
 
             
@@ -407,18 +407,21 @@
 <h3 id="shadowsocks服务端"><a href="#shadowsocks服务端" class="headerlink" title="shadowsocks服务端"></a>shadowsocks服务端</h3><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在终端输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">$ chmod +x shadowsocks.sh</span><br><span class="line">$ ./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure></p>
 <p>然后会设定一个密码，设定好之后回车，会需要设定一个端口，输入<code>1–65535</code>之间的数字都可以，回车，需要选择加密方式，看个人喜好选择。然后就开始部署了，需要等待几分钟，部署完成之后会显示，你之前设定的所有信息。记住显示的信息。</p>
 <h4 id="TCP-Fast-Open-可选"><a href="#TCP-Fast-Open-可选" class="headerlink" title="TCP Fast Open(可选)"></a>TCP Fast Open(可选)</h4><p>这一步是为了增加速度。<br>在终端输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nano /etc/rc.local</span><br></pre></td></tr></table></figure></p>
-<p>然后在出现的界面中，在最下行添加如下</p>
+<p>在出现的界面中，在最下行添加如下信息</p>
 <blockquote>
-<p>echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen<br>然后按 Ctrl + X 退出，输入“Y”并回车确认退出。<br>然后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nano /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p>
+<p>echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</p>
 </blockquote>
+<p>按 Ctrl + X 退出，输入“Y”并回车确认退出。<br>输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nano /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p>
 <p>在最后添加</p>
 <blockquote>
-<p>net.ipv4.tcp_fastopen = 3<br>然后退出<br>输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nano /etc/shadowsocks.json</span><br></pre></td></tr></table></figure></p>
+<p>net.ipv4.tcp_fastopen = 3</p>
 </blockquote>
-<p>修改</p>
+<p>保存退出之后输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nano /etc/shadowsocks.json</span><br></pre></td></tr></table></figure></p>
+<p>修改如下信息</p>
 <blockquote>
-<p>“fast_open”:true<br>保存退出，重启shadowsocks<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/shadowsocks restart</span><br></pre></td></tr></table></figure></p>
+<p>“fast_open”:true</p>
 </blockquote>
+<p>保存退出，重启<code>shadowsocks</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/shadowsocks restart</span><br></pre></td></tr></table></figure></p>
 <h3 id="shadowsocks客户端"><a href="#shadowsocks客户端" class="headerlink" title="shadowsocks客户端"></a>shadowsocks客户端</h3><p>根据不同的系统，在网上下载shadowsocks客户端，输入在部署时候的IP，端口号，密码等，就可以开始愉快的网上冲浪了！</p>
 <h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>退出ssh登陆<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure></p>
 <p>查看打开的端口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ netstat -anp</span><br></pre></td></tr></table></figure></p>
